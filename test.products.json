@@ -1,0 +1,26 @@
+{
+    "products": {
+        "fish": [
+            {
+                "id": 1,
+                "name": "",
+                "weight": "",
+                "price": 500,
+                "imgs": [
+                    ""
+                ]
+            }
+        ],
+        "meal": [
+            {
+                "id": 2,
+                "name": "",
+                "weight": "",
+                "price": 500,
+                "imgs": [
+                    ""
+                ]
+            }
+        ]
+    }
+}
