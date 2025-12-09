@@ -1,6 +1,5 @@
 # Node.js.gitignore
 
-products.json
 env
 
 # Logs
