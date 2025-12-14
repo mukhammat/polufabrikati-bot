@@ -32,7 +32,6 @@ export const tBot = async (bot: Bot, c: Context) => {
         tefteli: "🍛 Тефтели и фрикадельки",
         pechenochny_tort: "🥮 Печёночный торт",
         samsa: "🥟 Самса",
-        vareniki: "🥟 Вареники",
     } as const;
     
     
@@ -112,6 +111,23 @@ export const tBot = async (bot: Bot, c: Context) => {
         const userCart = getUserCart(userId);
         return userCart.get(productId) || 0;
     };
+
+    // Функция для формирования текста корзины
+    const formatCartMessage = (userCart: Map<number, number>) => {
+        let message = '🛒 Мой заказ:\n\n';
+        let totalPrice = 0;
+        
+        for (const [productId, qty] of userCart.entries()) {
+            const product = getProductById(productId);
+            if(product) {
+                message += `• ${product.name} — ${qty} шт. × ${product.price}₽\n`;
+                totalPrice += product.price * qty;
+            }
+        }
+        
+        message += `\n💰 Итого: ${totalPrice}₽`;
+        return message;
+    };
     
     // Menu callbacks
     for (const element of Object.entries(menu)) {
@@ -186,19 +202,54 @@ export const tBot = async (bot: Bot, c: Context) => {
     }
 
     bot.callbackQuery('order_now', async (ctx) => {
-        await ctx.answerCallbackQuery('🎉 Переход к оформлению заказа!');
+        await ctx.answerCallbackQuery('🎉 Оформление заказа...');
         
-        await ctx.reply('📝 <b>Оформление заказа</b>\n\nПожалуйста, свяжитесь с нашим менеджером для завершения заказа:', {
-            reply_markup: new InlineKeyboard()
-                .text('📞 Связаться с менеджером', 'contact_manager')
-                .row()
-                .text('◀️ Назад', 'back_to_menu'),
-            parse_mode: 'HTML'
-        });
+        await loadCartFromKV(ctx.callbackQuery.from.id);
+        const userCart = getUserCart(ctx.callbackQuery.from.id);
+        
+        // Проверка пустой корзины
+        if(userCart.size === 0) {
+            await ctx.reply('🛒 <b>Ваша корзина пуста</b>\n\n😔 Добавьте товары перед оформлением заказа!', {
+                reply_markup: new InlineKeyboard()
+                    .text('◀️ Перейти в меню', 'back_to_menu'),
+                parse_mode: 'HTML'
+            });
+            return;
+        }
+        
+        // Формируем текст корзины
+        const cartMessage = formatCartMessage(userCart);
+        
+        // Получаем ID менеджера из переменных окружения
+        const managerUsername = c.env.MANAGER_USERNAME || 'your_manager'; // добавьте username менеджера
+        
+        // Кодируем сообщение для URL
+        const encodedWhatsAppMessage = encodeURIComponent(cartMessage);
+        const encodedTelegramMessage = encodeURIComponent(cartMessage);
+        
+        // Создаём ссылки
+        const whatsappUrl = `https://wa.me/966573038983?text=${encodedWhatsAppMessage}`;
+        const telegramUrl = `https://t.me/${managerUsername}?text=${encodedTelegramMessage}`;
+        
+        await ctx.reply(
+            '📱 <b>Выберите способ связи с менеджером</b>\n\n' +
+            '✅ Ваша корзина будет автоматически отправлена в чат\n\n' +
+            '👇 Нажмите на удобный для вас способ связи:',
+            {
+                reply_markup: new InlineKeyboard()
+                    .url('💬 Telegram', telegramUrl)
+                    .row()
+                    .url('📱 WhatsApp', whatsappUrl)
+                    .row()
+                    .text('◀️ Назад в меню', 'back_to_menu'),
+                parse_mode: 'HTML'
+            }
+        );
     });
 
     bot.callbackQuery('back_to_menu', async (ctx) => {
         await ctx.answerCallbackQuery();
+        
         await ctx.reply(welcome, {
             reply_markup: menuInlineKeyboard,
             parse_mode: 'HTML'
@@ -207,11 +258,25 @@ export const tBot = async (bot: Bot, c: Context) => {
 
     bot.callbackQuery('contact_manager', async (ctx) => {
         await ctx.answerCallbackQuery();
-        await ctx.reply('📞 <b>Связь с менеджером</b>\n\n👋 Наш менеджер готов ответить на все ваши вопросы!\n\n📱 Напишите нам: @your_manager\n☎️ Или позвоните: +7 (XXX) XXX-XX-XX', {
-            reply_markup: new InlineKeyboard()
-                .text('◀️ Вернуться в меню', 'back_to_menu'),
-            parse_mode: 'HTML'
-        });
+        
+        const managerUsername = c.env.MANAGER_USERNAME || 'your_manager';
+        
+        await ctx.reply(
+            '📞 <b>Связь с менеджером</b>\n\n' +
+            '👋 Наш менеджер готов ответить на все ваши вопросы!\n\n' +
+            `💬 Telegram: @${managerUsername}\n` +
+            '📱 WhatsApp: <a href="https://wa.me/966573038983">+966 57 303 8983</a>\n' +
+            '☎️ Телефон: <code>+966 57 303 8983</code>', 
+            {
+                reply_markup: new InlineKeyboard()
+                    .url('💬 Написать в Telegram', `https://t.me/${managerUsername}`)
+                    .row()
+                    .url('📱 Написать в WhatsApp', 'https://wa.me/966573038983')
+                    .row()
+                    .text('◀️ Вернуться в меню', 'back_to_menu'),
+                parse_mode: 'HTML'
+            }
+        );
     });
 
 

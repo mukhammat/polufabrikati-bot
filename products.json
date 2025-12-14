@@ -5,7 +5,7 @@
                 "id": 1,
                 "name": "Пельмени с говядиной",
                 "weight": "1 кг",
-                "price": 500,
+                "price": 35,
                 "imgs": [
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782082/WhatsApp_Image_2025-11-29_at_20.54.07_1da1069f_nlxnle.jpg",
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782036/WhatsApp_Image_2025-11-29_at_20.54.07_dfb173d7_kdycqo.jpg",
@@ -18,7 +18,7 @@
                 "id": 2,
                 "name": "Манты с говядиной",
                 "weight": "1 кг",
-                "price": 500,
+                "price": 45,
                 "imgs": [
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782044/WhatsApp_Image_2025-11-29_at_20.54.08_daed6447_wokvnu.jpg",
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782042/WhatsApp_Image_2025-11-29_at_20.54.08_67a2cb04_enpqeq.jpg"
@@ -28,9 +28,9 @@
         "golubtsy": [
             {
                 "id": 3,
-                "name": "Голубцы с говядиной",
+                "name": "Голубцы с капустой и перцем",
                 "weight": "1 кг",
-                "price": 500,
+                "price": 40,
                 "imgs": [
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782048/WhatsApp_Image_2025-11-29_at_20.54.09_6d820789_p4wsjm.jpg",
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782054/WhatsApp_Image_2025-11-29_at_20.54.09_c949df1c_hdsvg7.jpg",
@@ -42,25 +42,27 @@
         "kotlety": [
             {
                 "id": 4,
-                "name": "Котлеты с говядиной",
+                "name": "Котлеты с говядины и курицы",
                 "weight": "1 кг",
-                "price": 500,
+                "price": 50,
                 "imgs": [
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782065/WhatsApp_Image_2025-11-29_at_20.54.10_273e0ad5_rugh0v.jpg",
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782063/WhatsApp_Image_2025-11-29_at_20.54.10_0e16fa12_hebbx3.jpg",
-                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782057/WhatsApp_Image_2025-11-29_at_20.54.09_d1f79903_wpbz0n.jpg",
-                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782050/WhatsApp_Image_2025-11-29_at_20.54.09_96a04ac8_rgg94g.jpg",
-                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782067/WhatsApp_Image_2025-11-29_at_20.54.10_ee8750bd_fdhcka.jpg"                    
+                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1765737086/WhatsApp_Image_2025-12-09_at_9.42._PM_wqgv7h.jpg"
                 ]
             }
         ],
         "tefteli": [
             {
                 "id": 5,
-                "name": "Тефтели с говядиной",
+                "name": "Тефтели и фрикадельки",
                 "weight": "1 кг",
-                "price": 500,
-                "imgs": ["https://res.cloudinary.com/dofolrkgx/image/upload/v1764782082/WhatsApp_Image_2025-11-29_at_20.54.07_1da1069f_nlxnle.jpg"]
+                "price": 45,
+                "imgs": [
+                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782057/WhatsApp_Image_2025-11-29_at_20.54.09_d1f79903_wpbz0n.jpg",
+                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782050/WhatsApp_Image_2025-11-29_at_20.54.09_96a04ac8_rgg94g.jpg",
+                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782067/WhatsApp_Image_2025-11-29_at_20.54.10_ee8750bd_fdhcka.jpg"                    
+                ]
             }
         ],
         "pechenochny_tort": [
@@ -68,7 +70,7 @@
                 "id": 6,
                 "name": "Печеночный торт",
                 "weight": "1 шт",
-                "price": 700,
+                "price": 45,
                 "imgs": [
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782082/WhatsApp_Image_2025-11-29_at_20.54.11_dc90510a_jthihq.jpg",
                     "https://res.cloudinary.com/dofolrkgx/image/upload/v1764782047/WhatsApp_Image_2025-11-29_at_20.54.08_ec526fea_i5xz2p.jpg",
@@ -80,19 +82,13 @@
         "samsa": [
             {
                 "id": 7,
-                "name": "Самса с говядиной",
+                "name": "Самса с говядиной( в килограмме 10 шт +-)",
                 "weight": "1 кг",
-                "price": 500,
-                "imgs": ["https://res.cloudinary.com/dofolrkgx/image/upload/v1764782082/WhatsApp_Image_2025-11-29_at_20.54.07_1da1069f_nlxnle.jpg"]
-            }
-        ],
-        "vareniki": [
-            {
-                "id": 8,
-                "name": "Вареники с картошкой",
-                "weight": "1 кг",
-                "price": 400,
-                "imgs": ["https://res.cloudinary.com/dofolrkgx/image/upload/v1764782082/WhatsApp_Image_2025-11-29_at_20.54.07_1da1069f_nlxnle.jpg"]
+                "price": 40,
+                "imgs": [
+                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1765737059/WhatsApp_Image_2025-12-09_at_9.41.51_PM_sfoqii.jpg",
+                    "https://res.cloudinary.com/dofolrkgx/image/upload/v1765737037/WhatsApp_Image_2025-12-09_at_9.41.52_PM_lizomx.jpg"
+                ]
             }
         ]
     }

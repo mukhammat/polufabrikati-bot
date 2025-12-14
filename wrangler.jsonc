@@ -44,7 +44,8 @@
 	 */
 	"vars": { 
 		"APP_URL": "",
-		"TELEGRAM_BOT_TOKEN": ""
+		"TELEGRAM_BOT_TOKEN": "",
+		"MANAGER_CHAT_ID": ""
 	}
 	/**
 	 * Note: Use secrets to store sensitive data.
