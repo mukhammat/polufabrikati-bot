@@ -193,7 +193,7 @@ export const tBot = async (bot: Bot, c: Context) => {
                     .row()
                     .text('◀️ Вернуться в меню', 'back_to_menu');
                 
-                await ctx.reply(`💫 <b>${value.name}</b> готов к заказу!`, {
+                await ctx.reply(`💫 <b>${value.name}</b> готовый к заказу!`, {
                     reply_markup: keyboard,
                     parse_mode: 'HTML'
                 });
