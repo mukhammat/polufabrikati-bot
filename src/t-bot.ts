@@ -1,38 +1,45 @@
-import { Bot, GrammyError, InlineKeyboard } from "grammy";
+import { Bot, GrammyError, InlineKeyboard, CallbackQueryContext, Context as GrammyContext } from "grammy";
 import products from '../products.json'
-import { Context } from "hono";
+import messages from '../messages.json'
+import { Context  } from "hono";
 
 // In-memory cache for cart state
 const cartCache: Map<string, Map<number, number>> = new Map();
 
+// Constants
+const managerUsername = {
+    man: 'KSA_CLOTHES_FOOD',
+    woman: 'food_clothes'
+} as const;
+
+const phoneNumber = {
+    man: '+966573038983',
+    woman: '+77001268866'
+} as const;
+
+const whatsappUrl = {
+    man: `https://wa.me/${phoneNumber.man}?text=`,
+    woman: `https://wa.me/${phoneNumber.woman}?text=`,
+} as const;
+
+const telegramUrl = {
+    man: `https://t.me/${managerUsername.man}?text=`,
+    woman: `https://t.me/${managerUsername.woman}?text=`,
+} as const;
+
+const menu = {
+    pelmeni: "🥟 Пельмени",
+    manti: "🥟 Манты",
+    golubtsy: "🫔 Голубцы",
+    kotlety: "🍗 Котлеты",
+    tefteli: "🍛 Тефтели и фрикадельки",
+    pechenochny_tort: "🥮 Печёночный торт",
+    samsa: "🥟 Самса",
+} as const;
+
+// Bot
 export const tBot = async (bot: Bot, c: Context) => {
-    const welcome = `🌙 <b>Ассаляму алейкум ва рохматуллахи ва баракатух!</b>
-    
-✨ Добро пожаловать в наш магазин домашних полуфабрикатов!
-
-🏠 У нас вы найдёте свежую и вкусную продукцию <b>собственного приготовления</b>, сделанную с душой и заботой о качестве.
-
-━━━━━━━━━━━━━━━━━━━━
-🎁 <b>Выгодные условия:</b>
-
-🎉 При заказе от <b>5 кг</b> — бесплатная доставка
-💎 При заказе от <b>10 кг</b> — скидка <b>10%</b> + бесплатная доставка
-━━━━━━━━━━━━━━━━━━━━
-
-🚚 Доставка по вашему адресу
-🏬 Самовывоз — забирайте заказ лично
-
-📱 Выберите категорию из меню ниже ⬇️`;
-    
-    const menu = {
-        pelmeni: "🥟 Пельмени",
-        manti: "🥟 Манты",
-        golubtsy: "🫔 Голубцы",
-        kotlety: "🍗 Котлеты",
-        tefteli: "🍛 Тефтели и фрикадельки",
-        pechenochny_tort: "🥮 Печёночный торт",
-        samsa: "🥟 Самса",
-    } as const;
+    const welcome = messages.welcome;
     
     
     const menuInlineKeyboard = new InlineKeyboard();
@@ -220,38 +227,27 @@ export const tBot = async (bot: Bot, c: Context) => {
         // Формируем текст корзины
         const cartMessage = formatCartMessage(userCart);
         
-        // Получаем ID менеджера из переменных окружения
-        const managerUsername = c.env.MANAGER_USERNAME || 'your_manager'; // добавьте username менеджера
-        const managerWoman = 'food_clothes';
-        
         // Кодируем сообщение для URL
         const encodedWhatsAppMessage = encodeURIComponent(cartMessage);
         const encodedTelegramMessage = encodeURIComponent(cartMessage);
-        
-        // Создаём ссылки
-        const whatsappUrl = `https://wa.me/966573038983?text=${encodedWhatsAppMessage}`;
-        const telegramUrl = `https://t.me/${managerUsername}?text=${encodedTelegramMessage}`;
-        const whatsappWomanUrl = `https://wa.me/+77001268866?text=${encodedWhatsAppMessage}`;
-        const telegramWomenUrl = `https://t.me/${managerWoman}?text=${encodedTelegramMessage}`;
-        
+                
         await ctx.reply(
             '📱 <b>Выберите способ связи с менеджером</b>\n\n' +
             '✅ Ваша корзина будет автоматически отправлена в чат\n\n' +
             '👇 Нажмите на удобный для вас способ связи:',
             {
                 reply_markup: new InlineKeyboard()
-                    .url('💬🚹 Telegram', telegramUrl)
+                    .url('💬🚹 Telegram (Брат)', `${telegramUrl.man}${encodedTelegramMessage}`)
+                    .url('📱🚹 WhatsApp (Брат)', `${whatsappUrl.man}${encodedWhatsAppMessage}`)
                     .row()
-                    .url('📱🚹 WhatsApp', whatsappUrl)
-                    .row()
-                    .url('💬🚺 Telegram', whatsappWomanUrl)
-                    .row()
-                    .url('📱🚺 WhatsApp', telegramWomenUrl)
+                    .url('💬🚺 Telegram (Сестра)', `${telegramUrl.woman}${encodedTelegramMessage}`)
+                    .url('📱🚺 WhatsApp (Сестра)', `${whatsappUrl.woman}${encodedWhatsAppMessage}`)
                     .row()
                     .text('◀️ Назад в меню', 'back_to_menu'),
                 parse_mode: 'HTML'
             }
         );
+
     });
 
     bot.callbackQuery('back_to_menu', async (ctx) => {
@@ -265,20 +261,26 @@ export const tBot = async (bot: Bot, c: Context) => {
 
     bot.callbackQuery('contact_manager', async (ctx) => {
         await ctx.answerCallbackQuery();
-        
-        const managerUsername = c.env.MANAGER_USERNAME || 'your_manager';
+
         
         await ctx.reply(
             '📞 <b>Связь с менеджером</b>\n\n' +
             '👋 Наш менеджер готов ответить на все ваши вопросы!\n\n' +
-            `💬 Telegram: @${managerUsername}\n` +
-            '📱 WhatsApp: <a href="https://wa.me/966573038983">+966 57 303 8983</a>\n' +
-            '☎️ Телефон: <code>+966 57 303 8983</code>', 
+            '<b>Для братьев:</b>\n' +
+            `💬 Telegram: @${managerUsername.man}\n` +
+            `📱 WhatsApp: <a href="${whatsappUrl.man}">${phoneNumber.man}</a>\n` +
+            `☎️ Телефон: <code>${phoneNumber.man}</code>\n\n` +
+            '<b>Для сестёр:</b>\n' +
+            `💬 Telegram: @${managerUsername.woman}\n` +
+            `📱 WhatsApp: <a href="${whatsappUrl.woman}">${phoneNumber.woman}</a>\n` +
+            `☎️ Телефон: <code>${phoneNumber.woman}</code>`,
             {
                 reply_markup: new InlineKeyboard()
-                    .url('💬 Написать в Telegram', `https://t.me/${managerUsername}`)
+                    .url('💬🚹 Telegram (Брат)', telegramUrl.man)
+                    .url('📱🚹 WhatsApp (Брат)', whatsappUrl.man)
                     .row()
-                    .url('📱 Написать в WhatsApp', 'https://wa.me/966573038983')
+                    .url('💬🚺 Telegram (Сестра)', telegramUrl.woman)
+                    .url('📱🚺 WhatsApp (Сестра)', whatsappUrl.woman)
                     .row()
                     .text('◀️ Вернуться в меню', 'back_to_menu'),
                 parse_mode: 'HTML'
