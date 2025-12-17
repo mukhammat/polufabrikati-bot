@@ -237,13 +237,13 @@ export const tBot = async (bot: Bot, c: Context) => {
             '👇 Нажмите на удобный для вас способ связи:',
             {
                 reply_markup: new InlineKeyboard()
-                    .url('💬🚹 Telegram (Брат)', `${telegramUrl.man}${encodedTelegramMessage}`)
+                    .url('💬🚹 Telegram (Братьям)', `${telegramUrl.man}${encodedTelegramMessage}`)
                     .row()
-                    .url('📱🚹 WhatsApp (Брат)', `${whatsappUrl.man}${encodedWhatsAppMessage}`)
+                    .url('📱🚹 WhatsApp (Братьям)', `${whatsappUrl.man}${encodedWhatsAppMessage}`)
                     .row()
-                    .url('💬🚺 Telegram (Сестра)', `${telegramUrl.woman}${encodedTelegramMessage}`)
+                    .url('💬🚺 Telegram (Сёстрам)', `${telegramUrl.woman}${encodedTelegramMessage}`)
                     .row()
-                    .url('📱🚺 WhatsApp (Сестра)', `${whatsappUrl.woman}${encodedWhatsAppMessage}`)
+                    .url('📱🚺 WhatsApp (Сёстрам)', `${whatsappUrl.woman}${encodedWhatsAppMessage}`)
                     .row()
                     .text('◀️ Назад в меню', 'back_to_menu'),
                 parse_mode: 'HTML'
@@ -278,13 +278,13 @@ export const tBot = async (bot: Bot, c: Context) => {
             `☎️ Телефон: <code>${phoneNumber.woman}</code>`,
             {
                 reply_markup: new InlineKeyboard()
-                    .url('💬🚹 Telegram (Брат)', telegramUrl.man)
+                    .url('💬🚹 Telegram (Братьям)', telegramUrl.man)
                     .row()
-                    .url('📱🚹 WhatsApp (Брат)', whatsappUrl.man)
+                    .url('📱🚹 WhatsApp (Братьям)', whatsappUrl.man)
                     .row()
-                    .url('💬🚺 Telegram (Сестра)', telegramUrl.woman)
+                    .url('💬🚺 Telegram (Сёстрам)', telegramUrl.woman)
                     .row()
-                    .url('📱🚺 WhatsApp (Сестра)', whatsappUrl.woman)
+                    .url('📱🚺 WhatsApp (Сёстрам)', whatsappUrl.woman)
                     .row()
                     .text('◀️ Вернуться в меню', 'back_to_menu'),
                 parse_mode: 'HTML'
