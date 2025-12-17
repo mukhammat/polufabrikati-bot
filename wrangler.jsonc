@@ -42,11 +42,10 @@
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
-	"vars": { 
-		"APP_URL": "",
-		"TELEGRAM_BOT_TOKEN": "",
-		"MANAGER_USERNAME": ""
-	}
+	// "vars": { 
+	// 	"APP_URL": "",
+	// 	"TELEGRAM_BOT_TOKEN": "",
+	// }
 	/**
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
