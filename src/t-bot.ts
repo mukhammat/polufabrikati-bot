@@ -238,9 +238,11 @@ export const tBot = async (bot: Bot, c: Context) => {
             {
                 reply_markup: new InlineKeyboard()
                     .url('💬🚹 Telegram (Брат)', `${telegramUrl.man}${encodedTelegramMessage}`)
+                    .row()
                     .url('📱🚹 WhatsApp (Брат)', `${whatsappUrl.man}${encodedWhatsAppMessage}`)
                     .row()
                     .url('💬🚺 Telegram (Сестра)', `${telegramUrl.woman}${encodedTelegramMessage}`)
+                    .row()
                     .url('📱🚺 WhatsApp (Сестра)', `${whatsappUrl.woman}${encodedWhatsAppMessage}`)
                     .row()
                     .text('◀️ Назад в меню', 'back_to_menu'),
@@ -277,9 +279,11 @@ export const tBot = async (bot: Bot, c: Context) => {
             {
                 reply_markup: new InlineKeyboard()
                     .url('💬🚹 Telegram (Брат)', telegramUrl.man)
+                    .row()
                     .url('📱🚹 WhatsApp (Брат)', whatsappUrl.man)
                     .row()
                     .url('💬🚺 Telegram (Сестра)', telegramUrl.woman)
+                    .row()
                     .url('📱🚺 WhatsApp (Сестра)', whatsappUrl.woman)
                     .row()
                     .text('◀️ Вернуться в меню', 'back_to_menu'),
