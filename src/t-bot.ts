@@ -193,7 +193,7 @@ export const tBot = async (bot: Bot, c: Context) => {
                     .row()
                     .text('◀️ Вернуться в меню', 'back_to_menu');
                 
-                await ctx.reply(`💫 <b>${value.name}</b> готовый к заказу!`, {
+                await ctx.reply(`💫 <b>${value.name}</b> готовы к заказу!`, {
                     reply_markup: keyboard,
                     parse_mode: 'HTML'
                 });
@@ -222,6 +222,7 @@ export const tBot = async (bot: Bot, c: Context) => {
         
         // Получаем ID менеджера из переменных окружения
         const managerUsername = c.env.MANAGER_USERNAME || 'your_manager'; // добавьте username менеджера
+        const managerWoman = 'food_clothes';
         
         // Кодируем сообщение для URL
         const encodedWhatsAppMessage = encodeURIComponent(cartMessage);
@@ -230,6 +231,8 @@ export const tBot = async (bot: Bot, c: Context) => {
         // Создаём ссылки
         const whatsappUrl = `https://wa.me/966573038983?text=${encodedWhatsAppMessage}`;
         const telegramUrl = `https://t.me/${managerUsername}?text=${encodedTelegramMessage}`;
+        const whatsappWomanUrl = `https://wa.me/+77001268866?text=${encodedWhatsAppMessage}`;
+        const telegramWomenUrl = `https://t.me/${managerWoman}?text=${encodedTelegramMessage}`;
         
         await ctx.reply(
             '📱 <b>Выберите способ связи с менеджером</b>\n\n' +
@@ -237,9 +240,13 @@ export const tBot = async (bot: Bot, c: Context) => {
             '👇 Нажмите на удобный для вас способ связи:',
             {
                 reply_markup: new InlineKeyboard()
-                    .url('💬 Telegram', telegramUrl)
+                    .url('💬🚹 Telegram', telegramUrl)
                     .row()
-                    .url('📱 WhatsApp', whatsappUrl)
+                    .url('📱🚹 WhatsApp', whatsappUrl)
+                    .row()
+                    .url('💬🚺 Telegram', whatsappWomanUrl)
+                    .row()
+                    .url('📱🚺 WhatsApp', telegramWomenUrl)
                     .row()
                     .text('◀️ Назад в меню', 'back_to_menu'),
                 parse_mode: 'HTML'
