@@ -14,7 +14,7 @@ const managerUsername = {
 
 const phoneNumber = {
     man: '+966573038983',
-    woman: '+77001268866'
+    woman: '+966571233762'
 } as const;
 
 const whatsappUrl = {
