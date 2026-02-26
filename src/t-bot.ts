@@ -14,7 +14,7 @@ const managerUsername = {
 
 const phoneNumber = {
     man: '+966573038983',
-    woman: '+966571233762'
+    woman: '+77001268866'
 } as const;
 
 const whatsappUrl = {
@@ -275,7 +275,7 @@ export const tBot = async (bot: Bot, c: Context) => {
             '<b>Для сестёр:</b>\n' +
             `💬 Telegram: @${managerUsername.woman}\n` +
             `📱 WhatsApp: <a href="${whatsappUrl.woman}">${phoneNumber.woman}</a>\n` +
-            `☎️ Телефон: <code>${phoneNumber.woman}</code>`,
+            `☎️ Телефон: <code>+966571233762</code>`,
             {
                 reply_markup: new InlineKeyboard()
                     .url('💬🚹 Telegram (Братьям)', telegramUrl.man)
